@@ -16,7 +16,7 @@ private const val LYMHURST = "Lymhurst"
 private const val BRIDGEWATCH = "Bridgewatch"
 private const val MARTLOK = "Martlok"
 
-private val CITY_MAP = mapOf(
+private val CITY_MAP =  mapOf(
     THETFORD to THETFORD_WEAPONS_MAP,
     FORT_STERLING to FORTSTERLING_WEAPONS_MAP,
     LYMHURST to LUMHURST_WEAPONS_MAP,
@@ -32,11 +32,20 @@ class AlbionWeaponParamsService {
         return weaponsWithTiers.joinToString(separator = WEAPONS_SEPARATOR, postfix = WEAPONS_POSTFIX)
     }
 
-    private fun generateVariations(weapon: String): List<String> = listOf(
-        "T4_$weapon",
-        "T4_$weapon@1",
-        "T5_$weapon",
-        "T5_$weapon@1",
-        "T6_$weapon"
-    )
+    fun generateVariations(weapon: String): List<String> = listOf(
+            "T4_$weapon",
+            "T4_$weapon@1",
+            "T5_$weapon",
+            "T5_$weapon@1",
+            "T6_$weapon"
+        )
+}
+
+fun main() {
+    CITY_MAP.values.flatMap { it.entries }.forEach { println(convertToDesiredFormat(it.key, it.value)) }
+}
+
+fun convertToDesiredFormat(key: String, map: Map<String, String>): String {
+    val valuesList = map.keys.joinToString(", ") { "\"$it\"" }
+    return "${key.uppercase().replace(" ", "")}(\"$key\", listOf($valuesList))"
 }

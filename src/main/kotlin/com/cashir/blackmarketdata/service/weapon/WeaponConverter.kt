@@ -15,7 +15,7 @@ class WeaponConverter {
             val prices = weapons.associateBy { it.tier to it.enchantment }
 
             GroupedWeapon(
-                category = weapons.first().category,
+                category = weapons.first().category?.name,
                 russianName = name,
                 prPrice4_0 = getPrice(prices, 4, 0, true),
                 bmPrice4_0 = getPrice(prices, 4, 0, false),
