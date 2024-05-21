@@ -40,12 +40,3 @@ class AlbionWeaponParamsService {
             "T6_$weapon"
         )
 }
-
-fun main() {
-    CITY_MAP.values.flatMap { it.entries }.forEach { println(convertToDesiredFormat(it.key, it.value)) }
-}
-
-fun convertToDesiredFormat(key: String, map: Map<String, String>): String {
-    val valuesList = map.keys.joinToString(", ") { "\"$it\"" }
-    return "${key.uppercase().replace(" ", "")}(\"$key\", listOf($valuesList))"
-}
