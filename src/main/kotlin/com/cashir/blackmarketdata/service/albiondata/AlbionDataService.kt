@@ -1,5 +1,6 @@
 package com.cashir.blackmarketdata.service.albiondata
 
+import com.cashir.blackmarketdata.model.City
 import com.cashir.blackmarketdata.model.WeaponEntity
 import com.cashir.blackmarketdata.okhttp.AlbionHttpClient
 import org.springframework.stereotype.Service
@@ -14,7 +15,7 @@ class AlbionDataService(
     private val albionWeaponParamsService: AlbionWeaponParamsService,
     private val albionWeaponResponseHandler: AlbionWeaponResponseHandler,
 ) {
-    fun loadWeapons(city: String): List<WeaponEntity> {
+    fun loadWeapons(city: City): List<WeaponEntity> {
         val urlEncodedWeaponIds = albionWeaponParamsService.buildAlbionWeaponsUrlParam(city)
         val apiUrl = "$DATA_PROJECT_API_URL$WEAPON_ENDPOINT$urlEncodedWeaponIds$STANDARD_QUERY_PARAMS"
         val albionWeaponResponse = webclientService.sendGetWebclientRequest(apiUrl)
