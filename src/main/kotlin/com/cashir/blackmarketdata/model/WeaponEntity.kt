@@ -18,7 +18,7 @@ data class WeaponEntity(
     val category: Category?,
     @Enumerated(EnumType.STRING)
     val city: City?,
-    val russianName: String,
+    val russianName: String?,
     val tier: Int,
     val enchantment: Int,
     val prPrice: Int,

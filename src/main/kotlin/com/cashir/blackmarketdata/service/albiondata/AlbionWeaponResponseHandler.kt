@@ -4,6 +4,7 @@ import com.cashir.blackmarketdata.api.AlbionDataItem
 import com.cashir.blackmarketdata.model.Category
 import com.cashir.blackmarketdata.model.City
 import com.cashir.blackmarketdata.model.WeaponEntity
+import com.cashir.blackmarketdata.util.RUSSIAN_ID_MAP
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -52,9 +53,10 @@ class AlbionWeaponResponseHandler {
         return matchResult?.groupValues?.get(1)?.toIntOrNull() ?: throw IllegalArgumentException("Invalid itemId format")
     }
 
-    private fun getRussianName(itemId: String): String {
+    private fun getRussianName(itemId: String): String? {
         val regex = """T\d_([^@]+)@?\d*""".toRegex()
-        return regex.find(itemId)?.groupValues?.get(1) ?: itemId
+        val formated = regex.find(itemId)?.groupValues?.get(1)
+        return RUSSIAN_ID_MAP[formated]
     }
 
     private fun processError(response: Response, ex: Throwable): List<WeaponEntity> {

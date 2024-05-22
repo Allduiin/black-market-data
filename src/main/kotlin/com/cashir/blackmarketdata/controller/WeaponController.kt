@@ -17,9 +17,15 @@ class WeaponController(
     private val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
     @GetMapping("/get-all")
-    fun getDataFromDb(): String {
+    fun getAllDataFromDb(): String {
         logger.info("Get grouped weapons from db data")
-        return weaponService.getGroupedWeapons()
+        return weaponService.getAllGroupedWeapons()
+    }
+
+    @GetMapping("/get-data")
+    fun getDataFromDb(@RequestParam("city") cityName: String): String {
+        logger.info("Get grouped weapons from db data for $cityName")
+        return weaponService.getGroupedWeaponsByCity(City.fromFormattedName(cityName))
     }
 
     @GetMapping("/reload-data")
@@ -30,7 +36,7 @@ class WeaponController(
     }
 
     @GetMapping("/reload-all")
-    fun updateData(): String {
+    fun updateAllData(): String {
         logger.info("Reload data from Black Market for all cities")
         City.entries.forEach { updateData(it.humanReadableName) }
         logger.info("Reloaded data from Black Market for all cities")
