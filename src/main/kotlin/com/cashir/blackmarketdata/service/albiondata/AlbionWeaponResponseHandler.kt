@@ -1,6 +1,8 @@
 package com.cashir.blackmarketdata.service.albiondata
 
 import com.cashir.blackmarketdata.api.AlbionDataItem
+import com.cashir.blackmarketdata.model.Category
+import com.cashir.blackmarketdata.model.City
 import com.cashir.blackmarketdata.model.WeaponEntity
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -20,9 +22,40 @@ class AlbionWeaponResponseHandler {
         response.runCatching {
             objectMapper.readValue<List<AlbionDataItem>>(requireNotNull(response.body?.string()))
         }.fold(
-            onSuccess = { item -> item.map { WeaponEntity(it) } },
+            onSuccess = {
+                it.map { item ->
+                    val category = Category.fromAlbionId(item.itemId)
+                    WeaponEntity(
+                        category = category,
+                        city = City.fromCategory(category),
+                        russianName = getRussianName(item.itemId),
+                        tier = getTier(item.itemId),
+                        enchantment = getEnchantment(item.itemId),
+                        prPrice = item.sellPriceMin / 10 * 6,
+                        bmPrice = item.sellPriceMin,
+                        albionId = item.itemId
+                    )
+                }
+            },
             onFailure = { processError(response, it) }
         )
+
+    private fun getEnchantment(itemId: String): Int {
+        val enchantmentPattern = "@(\\d+)".toRegex()
+        val matchResult = enchantmentPattern.find(itemId)
+        return matchResult?.groupValues?.get(1)?.toIntOrNull() ?: 0
+    }
+
+    private fun getTier(itemId: String): Int {
+        val tierPattern = "T(\\d)".toRegex()
+        val matchResult = tierPattern.find(itemId)
+        return matchResult?.groupValues?.get(1)?.toIntOrNull() ?: throw IllegalArgumentException("Invalid itemId format")
+    }
+
+    private fun getRussianName(itemId: String): String {
+        val regex = """T\d_([^@]+)@?\d*""".toRegex()
+        return regex.find(itemId)?.groupValues?.get(1) ?: itemId
+    }
 
     private fun processError(response: Response, ex: Throwable): List<WeaponEntity> {
         logger.error(response.body?.string(), ex)

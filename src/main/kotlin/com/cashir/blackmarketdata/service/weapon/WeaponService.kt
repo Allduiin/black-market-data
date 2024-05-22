@@ -1,5 +1,6 @@
 package com.cashir.blackmarketdata.service.weapon
 
+import com.cashir.blackmarketdata.model.City
 import com.cashir.blackmarketdata.repository.WeaponRepository
 import com.cashir.blackmarketdata.service.albiondata.AlbionDataService
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -19,10 +20,10 @@ class WeaponService(
         return objectMapper.writeValueAsString(groupedWeapons)
     }
 
-    fun reloadData(city: String): String {
+    fun reloadData(city: City): String {
         val reloadedWeapons = albionWeaponController.loadWeapons(city)
-        weaponRepository.saveAll(reloadedWeapons)
-        val groupedWeapons = weaponConverterService.convertToGroupedWeapons(reloadedWeapons)
+        val savedWeapons = weaponRepository.saveAll(reloadedWeapons)
+        val groupedWeapons = weaponConverterService.convertToGroupedWeapons(savedWeapons)
         return objectMapper.writeValueAsString(groupedWeapons)
     }
 }
