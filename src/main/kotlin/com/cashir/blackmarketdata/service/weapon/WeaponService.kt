@@ -14,8 +14,14 @@ class WeaponService(
 ) {
     private val objectMapper = jacksonObjectMapper()
 
-    fun getGroupedWeapons(): String {
+    fun getAllGroupedWeapons(): String {
         val weaponDtos = weaponRepository.findAll()
+        val groupedWeapons = weaponConverterService.convertToGroupedWeapons(weaponDtos)
+        return objectMapper.writeValueAsString(groupedWeapons)
+    }
+
+    fun getGroupedWeaponsByCity(city: City): String {
+        val weaponDtos = weaponRepository.findByCity(city)
         val groupedWeapons = weaponConverterService.convertToGroupedWeapons(weaponDtos)
         return objectMapper.writeValueAsString(groupedWeapons)
     }

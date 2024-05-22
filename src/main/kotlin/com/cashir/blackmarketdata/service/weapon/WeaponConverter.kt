@@ -20,7 +20,7 @@ class WeaponConverter {
 
             GroupedWeapon(
                 city = weapons.first().city?.humanReadableName,
-                category = weapons.first().category?.humanReadableName,
+                category = weapons.first().category?.russianReadableName,
                 russianName = name,
                 prPrice4_0 = getPrice(prices, 4, 0, true),
                 bmPrice4_0 = getPrice(prices, 4, 0, false),
@@ -37,7 +37,7 @@ class WeaponConverter {
             )
         }.sortedBy {
             it.category + it.russianName
-                .replace(TWO_HANDED, EMPTY)
-                .replace(MAIN_HANDED, EMPTY)
+                ?.replace(TWO_HANDED, EMPTY)
+                ?.replace(MAIN_HANDED, EMPTY)
         }
 }

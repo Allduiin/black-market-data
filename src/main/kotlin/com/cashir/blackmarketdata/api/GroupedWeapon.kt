@@ -3,7 +3,7 @@ package com.cashir.blackmarketdata.api
 data class GroupedWeapon (
     val city: String?,
     val category: String?,
-    val russianName: String,
+    val russianName: String?,
     val prPrice4_0: Int,
     val bmPrice4_0: Int,
     val prPrice4_1: Int,
