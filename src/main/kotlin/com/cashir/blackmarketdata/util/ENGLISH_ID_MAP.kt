@@ -128,10 +128,3 @@ val ENGLISH_ID_MAP = mapOf(
     "2H_SHAPESHIFTER_KEEPER" to "Earthrune Staff",
     "2H_SHAPESHIFTER_AVALON" to "Lightcaller"
 )
-
-
-fun main() {
-    ENGLISH_ID_MAP.forEach {
-        println(it.value)
-    }
-}

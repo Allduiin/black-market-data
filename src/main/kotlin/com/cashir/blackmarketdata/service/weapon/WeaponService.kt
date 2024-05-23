@@ -17,7 +17,8 @@ class WeaponService(
     fun getAllGroupedWeapons(): String {
         val weaponDtos = weaponRepository.findAll()
         val groupedWeapons = weaponConverterService.convertToGroupedWeapons(weaponDtos)
-        return objectMapper.writeValueAsString(groupedWeapons)
+        val sorted = groupedWeapons.sortedBy { it.city }
+        return objectMapper.writeValueAsString(sorted)
     }
 
     fun getGroupedWeaponsByCity(city: City): String {
