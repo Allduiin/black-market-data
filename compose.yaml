@@ -6,8 +6,8 @@ services:
       - 'POSTGRES_PASSWORD=secret'
       - 'POSTGRES_USER=myuser'
     ports:
-      - '5432:5432'
-  springapp:
+      - '5432'
+  spring-app:
     build: .
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydatabase
@@ -17,11 +17,11 @@ services:
       - '8080:8080'
     depends_on:
       - postgres
-  nextjsapp:
+  front-end:
     build:
-      context: nextjs-app/
+      context: front-app/
       dockerfile: Dockerfile
     ports:
       - '3000:3000'
     depends_on:
-      - springapp
+      - spring-app
