@@ -10,6 +10,9 @@ COPY gradlew .
 COPY settings.gradle.kts .
 COPY build.gradle.kts .
 
+# Ensure the Gradle wrapper has executable permissions
+RUN chmod +x ./gradlew
+
 # Copy the rest of the project files
 COPY src ./src
 
