@@ -20,7 +20,7 @@ const Home = () => {
     const fetchData = async (city) => {
         try {
             const endpoint = city === 'all' ? '/weapons/get-all' : `/weapons/get-data?city=${city}`;
-            const response = await axios.get(`http://localhost:8080${endpoint}`);
+            const response = await axios.get(`http://172.17.0.3:8080${endpoint}`);
             setData(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -29,7 +29,7 @@ const Home = () => {
 
     const reloadAllData = async () => {
         try {
-            await axios.get('http://localhost:8080/weapons/reload-all');
+            await axios.get('http://172.17.0.3:8080/weapons/reload-all');
             if (city) {
                 fetchData(city);
             }

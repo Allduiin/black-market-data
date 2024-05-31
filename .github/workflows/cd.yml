@@ -22,9 +22,9 @@ jobs:
       - name: Delete Old docker container
         run: sudo docker rm -f black-market-data_spring-app-container || true
       - name: Delete Old docker container
-        run: sudo docker rm -f black-market-data_spring-app-container || true
+        run: sudo docker rm -f black-market-data_front-end-container || true
 
       - name: Run Front end at Docker Container
         run: sudo docker run -d -p 8080:8080 --name black-market-data_spring-app-container allduiiin/black-market-data_spring-app
       - name: Run Back end at Container
-        run: sudo docker run -d -p 3000:3000 --name black-market-data_front-end-container allduiiin/black-market-data_spring-app
+        run: sudo docker run -d -p 3000:3000 --name black-market-data_front-end-container allduiiin/black-market-data_front-end
