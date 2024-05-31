@@ -16,6 +16,7 @@ jobs:
         run: sudo docker pull allduiiin/black-market-data_front-end:latest
       - name: Pull back end Docker image
         run: sudo docker pull allduiiin/black-market-data_spring-app:latest
+
 #      - name: Delete Old docker containers
 #        run: sudo docker rm -f $(sudo docker ps -a -q)
       - name: Delete Old docker container
