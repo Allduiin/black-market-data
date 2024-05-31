@@ -27,5 +27,5 @@ jobs:
           docker-compose -f compose.yaml build
           docker tag black-market-data_spring-app allduiiin/black-market-data_spring-app:latest
           docker tag black-market-data_front-end allduiiin/black-market-data_front-end:latest
-          docker push your-dockerhub-username/black-market-data_spring-app:latest
-          docker push your-dockerhub-username/black-market-data_front-end:latest
+          docker push allduiiin/black-market-data_spring-app:latest
+          docker push allduiiin/black-market-data_front-end:latest
