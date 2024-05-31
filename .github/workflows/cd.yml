@@ -17,11 +17,13 @@ jobs:
       - name: Pull back end Docker image
         run: sudo docker pull allduiiin/black-market-data_spring-app:latest
 
-      - name: Delete Old docker containers
-        run: sudo docker rm -f $(sudo docker ps -a -q)
+#      - name: Delete Old docker containers
+#        run: sudo docker rm -f $(sudo docker ps -a -q)
+      - name: Delete Old docker container
+        run: sudo docker rm -f black-market-data_spring-app-container || true
+      - name: Delete Old docker container
+        run: sudo docker rm -f black-market-data_spring-app-container || true
 
-      - name: Run Postgre at Docker Container
-        run: sudo docker run -d --name my-postgres-container -e POSTGRES_DB=mydatabase -e POSTGRES_PASSWORD=secret -e POSTGRES_USER=myuser -p 5432:5432 postgres:latest
       - name: Run Front end at Docker Container
         run: sudo docker run -d -p 8080:8080 --name black-market-data_spring-app-container allduiiin/black-market-data_spring-app
       - name: Run Back end at Container
